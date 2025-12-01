@@ -1,21 +1,17 @@
-# AdventOfCode2025
+# Advent of Code 2025
 
-**TODO: Add description**
+## Source Code: (1/12) Done  
 
-## Installation
+| M  | T  | W  | T  | F  | S  | S  |
+|----|----|----|----|----|----|----|
+|  [1](lib/day01.ex)  |  X  |  X  |  X  |  X  |  X  |  X  |
+|  X |  X |  X |  X |  X |  X |    |
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `advent_of_code_2025` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:advent_of_code_2025, "~> 0.1.0"}
-  ]
-end
+Each day can be run with cargo by running:
+```zsh
+mix test test/dayXX_test.exs
 ```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/advent_of_code_2025>.
-
+E.g:
+```zsh
+mix test test/day01_test.exs
+```
