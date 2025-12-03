@@ -63,7 +63,14 @@ defmodule AdventOfCode2025 do
       6..5//1
 
   """
-  def el_range(x, y, n) when x <= y, do: (x+1)..y//n
-  def el_range(x, y, n), do: (x-1)..y//-n
+  def el_range(x, y, n) when x <= y, do: (x + 1)..y//n
+  def el_range(x, y, n), do: (x - 1)..y//-n
   def el_range(x, y), do: el_range(x, y, 1)
+
+  def run_time(function) do
+    function
+    |> :timer.tc()
+    |> elem(0)
+    |> Kernel./(1_000_000)
+  end
 end
