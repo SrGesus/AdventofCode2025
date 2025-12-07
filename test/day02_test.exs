@@ -45,6 +45,5 @@ defmodule Day02Test do
     assert id == 27_180_728_081
 
     lines = AdventOfCode2025.input_lines("inputs/day02_1.txt")
-    assert AdventOfCode2025.run_time(fn -> lines |> Day02.solve(:two) end) * 1000 == 1
   end
 end

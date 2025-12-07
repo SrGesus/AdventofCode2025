@@ -17,8 +17,8 @@ defmodule Day03 do
 
       :two ->
         banks
-        |> Enum.map(&get_joltage/1)
-        |> Enum.map(&list_to_number/1)
+        |> Task.async_stream(&get_joltage/1, max_concurrency: System.schedulers_online())
+        |> Enum.map(fn {:ok, l} -> list_to_number(l) end)
         |> Enum.sum()
     end
   end
@@ -33,7 +33,7 @@ defmodule Day03 do
       if head <= best do
         get_joltage(tail, number, best)
       else
-        new_best = [head | get_joltage(tail, number - 1)]
+        new_best = [head | get_joltage(tail, number - 1, 0)]
         mmax(new_best, get_joltage(tail, number, head))
       end
     end
