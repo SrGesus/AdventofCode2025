@@ -33,8 +33,7 @@ defmodule Day07 do
       # |> Enum.count()
 
       :two ->
-        lines
-        |> Enum.reduce(List.duplicate(0,length(hd(lines))), &split2/2) |> Enum.sum()
+        lines |> Enum.reduce(List.duplicate(0, length(hd(lines))), &split2/2) |> Enum.sum()
     end
   end
 
@@ -44,30 +43,39 @@ defmodule Day07 do
     pprev = [:void | prev ++ [:void]]
     pnext = [:void | next ++ [:void]]
 
-    stuff =
-      for {this, i} <- Enum.with_index(next) do
-        cond do
-          Enum.at(pprev, i + 1) == :beam and this == :splitter ->
-            {:splitter, 1}
+    Enum.with_index(next)
+    |> Enum.reduce({[], count}, fn {elem, i}, {list, c} ->
+      i = i + 1
 
-          this == :splitter ->
-            {:splitter, 0}
+      {
+        list ++
+          [
+            cond do
+              elem == :splitter ->
+                :splitter
 
-          Enum.at(pprev, i + 1 - 1) == :beam and Enum.at(pnext, i + 1 - 1) == :splitter ->
-            {:beam, 0}
+              Enum.at(pprev, i - 1) == :beam and Enum.at(pnext, i - 1) == :splitter ->
+                :beam
 
-          Enum.at(pprev, i + 1 + 1) == :beam and Enum.at(pnext, i + 1 + 1) == :splitter ->
-            {:beam, 0}
+              Enum.at(pprev, i + 1) == :beam and Enum.at(pnext, i + 1) == :splitter ->
+                :beam
 
-          Enum.at(pprev, i + 1) == :beam and this == :void ->
-            {:beam, 0}
+              Enum.at(pprev, i) == :beam ->
+                :beam
 
-          true ->
-            {:void, 0}
-        end
-      end
-
-    {Enum.map(stuff, &elem(&1, 0)), (Enum.map(stuff, &elem(&1, 1)) |> Enum.sum()) + count}
+              true ->
+                :void
+            end
+          ],
+        c +
+          if Enum.at(pprev, i) == :beam and elem == :splitter do
+            # we be splitting
+            1
+          else
+            0
+          end
+      }
+    end)
   end
 
   @spec split2(list(cell()), list(cell())) :: list()
